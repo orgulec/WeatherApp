@@ -22,6 +22,7 @@ public class Main {
             switch (userInput) {
                 case "X" -> isRunning = false;
                 case "Y" -> System.out.println("TODO: add some weather data");
+                default -> System.out.println("Error: Invalidinput!");
             }
         }
 

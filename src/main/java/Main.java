@@ -1,3 +1,5 @@
+import api.HttpClientService;
+
 import java.util.Scanner;
 
 public class Main {
@@ -21,8 +23,8 @@ public class Main {
 
             switch (userInput) {
                 case "X" -> isRunning = false;
-                case "Y" -> System.out.println("TODO: add some weather data");
-                default -> System.out.println("Error: Invalidinput!");
+                case "Y" -> HttpClientService.getWeather(); //System.out.println("TODO: add some weather data");
+                default -> System.out.println("Error: Invalid input!");
             }
         }
 

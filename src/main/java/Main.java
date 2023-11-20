@@ -1,4 +1,6 @@
 import api.HttpClientService;
+import api.open_weather.CityOwResponse;
+import services.WeatherService;
 
 import java.util.Scanner;
 
@@ -23,7 +25,10 @@ public class Main {
 
             switch (userInput) {
                 case "X" -> isRunning = false;
-                case "Y" -> HttpClientService.getWeather(); //System.out.println("TODO: add some weather data");
+                case "Y" -> {
+                    final CityOwResponse weatherFromOpenWeather = new WeatherService().getWeatherFromOpenWeather();
+                    System.out.println("City name: " + weatherFromOpenWeather.getName());
+                }
                 default -> System.out.println("Error: Invalid input!");
             }
         }

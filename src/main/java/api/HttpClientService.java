@@ -18,7 +18,7 @@ import java.time.ZoneId;
 
 public class HttpClientService<T> {
 
-    private static HttpClient client = HttpClient.newHttpClient();
+    private static HttpClient client = HttpClient.newHttpClient();  //klasa do doobsługi protokołu http
     public T getWeather(String url, Class<T> responseClass){
         var request = HttpRequest
                 .newBuilder()   //wzorzec projektowy
@@ -42,7 +42,6 @@ public class HttpClientService<T> {
             ).create();
 
             return gson.fromJson(bodyAsString, responseClass);
-
 //            System.out.println(bodyAsString);
         } catch (IOException e) {
             throw new RuntimeException(e);

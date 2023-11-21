@@ -36,3 +36,31 @@ public class Main {
     }
 
 }
+
+
+/*
+    Techniczna specyfikacja aplikacji:
+    1. Architekura:
+    DDD / *Architektura warstwowa / Arch. heksagonalna
+    2. Wersja Javy
+    Java 17
+    3. Przechowywanie danych
+    Map<> / PostgreSQL + Hibernate (+ Spring)
+    4. Zewnetrzne dane
+    http
+    ---
+    MVP
+    Wymagań biznesowcyh
+    - chcemy pobierać dane z wielu miast w EU
+        - wybrać api zewnętrzne
+        - jakoś komunikować z api
+    - baza danych (prosta wersja)
+        - cityName
+        - date
+        - temperature
+        - windSpeed
+        - pressure
+    - chcemy uśredniać wyniki
+    - chcemy optymalizować pracę aplikacji poprzez cache
+        - podczas startu aplikacji pobieramy X miast
+ */

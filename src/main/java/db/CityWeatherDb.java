@@ -16,5 +16,13 @@ public class CityWeatherDb {
         dataBase.remove(entity.getId());
     }
 
+    public CityDataEntity change(CityDataEntity newCityDataEntity){
+        if(newCityDataEntity==null){
+            throw new IllegalArgumentException();
+        }
+        Long id = newCityDataEntity.getId();
+        dataBase.replace(id, newCityDataEntity);
+        return newCityDataEntity;
+    }
 
 }

@@ -8,8 +8,13 @@ public class CityWeatherDb {
 
     public void add(CityDataEntity entity){
         dataBase.put(entity.getId(), entity);
-        // add 1
-        //add 2
-        //add 3
     }
+    public void remove(CityDataEntity entity){
+        if(entity==null){
+            throw new IllegalArgumentException();
+        }
+        dataBase.remove(entity.getId());
+    }
+
+
 }

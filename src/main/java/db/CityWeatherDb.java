@@ -7,6 +7,9 @@ public class CityWeatherDb {
     private static final Map<Long, CityDataEntity> dataBase = new HashMap<>();
 
     public void add(CityDataEntity entity){
+        if(entity==null){
+            throw new IllegalArgumentException();
+        }
         dataBase.put(entity.getId(), entity);
     }
     public void remove(CityDataEntity entity){

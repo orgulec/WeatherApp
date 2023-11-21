@@ -6,6 +6,10 @@ import java.util.Map;
 public class CityWeatherDb {
     private static final Map<Long, CityDataEntity> dataBase = new HashMap<>();
 
+    public CityDataEntity get(Long id){
+        return dataBase.get(id);
+    }
+
     public void add(CityDataEntity entity){
         if(entity==null){
             throw new IllegalArgumentException();

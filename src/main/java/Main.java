@@ -18,7 +18,7 @@ public class Main {
             switch (userInput) {
                 case "X" -> isRunning = false;
                 case "Y" -> {
-                    final CityOwResponse weatherFromOpenWeather = new WeatherService().getWeatherFromOpenWeather();
+                    final CityOwResponse weatherFromOpenWeather = new WeatherService().getWeatherFromOpenWeather("Warsaw");
                     System.out.println("City name: " + weatherFromOpenWeather.getName());
                     System.out.println("City date: " + weatherFromOpenWeather.getDt());
                     System.out.println("City temp: " + weatherFromOpenWeather.getMain().getTemp());
@@ -26,15 +26,7 @@ public class Main {
                     System.out.println("City wind: " + weatherFromOpenWeather.getWind().getWind());
                 }
                 case "A" -> {
-                    System.out.println("Type a name of the city:");
-                    String newCity = sc.nextLine();
-                    CityOwResponse weatherFromOpenWeatherWithNewCity = getWeatherFromOpenWeatherWithNewCity(newCity);
-
-                    System.out.println("City name: " + weatherFromOpenWeatherWithNewCity.getName());
-                    System.out.println("City date: " + weatherFromOpenWeatherWithNewCity.getDt());
-                    System.out.println("City temp: " + weatherFromOpenWeatherWithNewCity.getMain().getTemp());
-                    System.out.println("City pressure: " + weatherFromOpenWeatherWithNewCity.getMain().getPressure());
-                    System.out.println("City wind: " + weatherFromOpenWeatherWithNewCity.getWind().getWind());
+                    showInputCityNameMenu();
                 }
                 default -> System.out.println("Error: Invalid input!");
             }
@@ -57,32 +49,26 @@ public class Main {
         return isFirstRun;
     }
 
+    private static void showInputCityNameMenu() {
+        System.out.println("Type a name of the city:");
+        Scanner sc2 = new Scanner(System.in);
+        String newCity = sc2.nextLine();
+//                    CityOwResponse weatherFromOpenWeatherWithNewCity = getWeatherFromOpenWeatherWithNewCity(newCity);
+        final CityOwResponse weatherFromOpenWeatherWithNewCity = new WeatherService().getWeatherFromOpenWeather(newCity);
+        String message = """
+                ---------
+                City name:      [%s]
+                City date:      [%s]
+                City temp:      [%s]
+                City pressure:  [%s]
+                City wind:      [%s]
+                """.formatted(
+                weatherFromOpenWeatherWithNewCity.getName(),
+                weatherFromOpenWeatherWithNewCity.getDt(),
+                weatherFromOpenWeatherWithNewCity.getMain().getTemp(),
+                weatherFromOpenWeatherWithNewCity.getMain().getPressure(),
+                weatherFromOpenWeatherWithNewCity.getWind().getWind());
+        System.out.println(message);
+    }
+
 }
-
-
-/*
-    Techniczna specyfikacja aplikacji:
-    1. Architekura:
-    DDD / *Architektura warstwowa / Arch. heksagonalna
-    2. Wersja Javy
-    Java 17
-    3. Przechowywanie danych
-    Map<> / PostgreSQL + Hibernate (+ Spring)
-    4. Zewnetrzne dane
-    http
-    ---
-    MVP
-    Wymagań biznesowcyh
-    - chcemy pobierać dane z wielu miast w EU
-        - wybrać api zewnętrzne
-        - jakoś komunikować z api
-    - baza danych (prosta wersja)
-        - cityName
-        - date
-        - temperature
-        - windSpeed
-        - pressure
-    - chcemy uśredniać wyniki
-    - chcemy optymalizować pracę aplikacji poprzez cache
-        - podczas startu aplikacji pobieramy X miast
- */

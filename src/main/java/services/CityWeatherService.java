@@ -1,11 +1,8 @@
 package services;
 
-import api.CityWeatherDataResponse;
+import api.dto.CityWeatherDataResponse;
 import api.HttpClientService;
 import api.open_weather.CityOwResponse;
-import db.CityDataEntity;
-import db.CityWeatherDb;
-import db.WeatherDataEntity;
 
 public class CityWeatherService {
 

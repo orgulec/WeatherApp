@@ -1,4 +1,4 @@
-package db;
+package database;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

@@ -5,30 +5,31 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityWeatherDbTest {
-    private CityWeatherDb dataBase;// = new CityWeatherDb();
-    private final Long cityDataEntity = 1L;
+    private CityWeatherDb dataBase;
+    private final Long cityId = 1L;
     @BeforeEach
     void generateDataBase(){
         dataBase = new CityWeatherDb();
-        long id = 1L;
         String cityName = "Warsaw";
         CityDataEntity cityDataEntity = new CityDataEntity();
-        cityDataEntity.setId(id);
+        cityDataEntity.setId(cityId);
         cityDataEntity.setName(cityName);
         dataBase.add(cityDataEntity);
     }
     @AfterEach
     void clearDatabase(){
-
+        dataBase.clear();
     }
 
     @Test
     void addMethodTest() {
         //given
-        long id = 2L;
+        Long id = 2L;
         String cityName = "Krakow";
         CityDataEntity newCityDataEntity = new CityDataEntity();
         newCityDataEntity.setId(2L);
@@ -36,15 +37,29 @@ class CityWeatherDbTest {
 
         //when
         dataBase.add(newCityDataEntity);
-        CityDataEntity result = dataBase.get(2L);
+        Optional<CityDataEntity> resultOpt = dataBase.get(2L);
+        String resultName = resultOpt.orElseThrow().getName();
         //then
-        Assertions.assertEquals(result.getName(), cityName);
+        Assertions.assertEquals(resultName, cityName);
+    }
+
+    @Test
+    void addDoubleKeyArg(){
+        //given
+        CityDataEntity doubleCityDataEntity = new CityDataEntity();
+        doubleCityDataEntity.setId(cityId);
+        doubleCityDataEntity.setName("Kraków");
+        //when
+        dataBase.add(doubleCityDataEntity);
+        //then
+
     }
 
     @Test
     void removeMethodTest() {
         //given
-        CityDataEntity cityToRemove = dataBase.get(cityDataEntity);
+        Optional<CityDataEntity> cityToRemoveOpt = dataBase.get(cityId);
+        CityDataEntity cityToRemove = cityToRemoveOpt.orElseThrow();
         //when
         dataBase.remove(cityToRemove);
         //then
@@ -52,11 +67,21 @@ class CityWeatherDbTest {
     }
 
     @Test
+    void shouldDeleteElementById() {
+        //given
+
+        //when
+        dataBase.delete(cityId);
+        //then
+        assertNull(dataBase.get(cityId));
+    }
+
+    @Test
     void removeNoneMethodTest() {
         //given
-        CityDataEntity cityToRemove = dataBase.get(cityDataEntity);
+        Long wrongId = 2L;
         //when
-        dataBase.remove(cityToRemove);
+        dataBase.delete(wrongId);
         //then
         assertNull(dataBase.get(1L));
     }
@@ -65,10 +90,10 @@ class CityWeatherDbTest {
     void shouldGetEntityById() {
         //given
         //when
-
-        CityDataEntity result = dataBase.get(cityDataEntity);
+        Optional<CityDataEntity> resultOpt = dataBase.get(cityId);
+        String resultName = resultOpt.orElseThrow().getName();
         //then
-        Assertions.assertEquals(result.getName(), "Warsaw");
+        Assertions.assertEquals(resultName, "Warsaw");
     }
 
     @Test
@@ -76,15 +101,17 @@ class CityWeatherDbTest {
         //given
 
         CityDataEntity changedCityDataEntity = new CityDataEntity();
-        changedCityDataEntity.setId(cityDataEntity);
+        changedCityDataEntity.setId(cityId);
         String newName = "WarsawAAA";
         changedCityDataEntity.setName("WarsawAAA");
 
         //when
         dataBase.change(changedCityDataEntity);
-        CityDataEntity result = dataBase.get(cityDataEntity);
-
+        Optional<CityDataEntity> resultOpt = dataBase.get(cityId);
+        String resultName = resultOpt.orElseThrow().getName();
         //then
-        Assertions.assertEquals(result.getName(), "WarsawAAA");
+        Assertions.assertEquals(resultName, "WarsawAAA");
     }
+
+
 }

@@ -1,4 +1,3 @@
-import api.HttpClientService;
 import api.open_weather.CityOwResponse;
 import services.WeatherService;
 
@@ -12,17 +11,7 @@ public class Main {
         var isRunning = true;
         var isFirstRun = true;
         while (isRunning) {
-            if (isFirstRun) {
-                System.out.println("""
-                        ----------------------
-                        WELCOME!
-                        type X to quit
-                        type Y to get a weather stats
-                        type A to input a new city name into database
-                        ----------------------
-                        """);
-                isFirstRun = false;
-            }
+            isFirstRun = showWelcomeMenu(isFirstRun);
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
 
@@ -51,6 +40,21 @@ public class Main {
             }
         }
 
+    }
+
+    private static boolean showWelcomeMenu(boolean isFirstRun) {
+        if (isFirstRun) {
+            System.out.println("""
+                    ----------------------
+                    WELCOME!
+                    type X to quit
+                    type Y to get a weather stats
+                    type A to input a new city name into database
+                    ----------------------
+                    """);
+            isFirstRun = false;
+        }
+        return isFirstRun;
     }
 
 }

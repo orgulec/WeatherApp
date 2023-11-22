@@ -30,6 +30,16 @@ public class CityOwResponse {
     public LocalDateTime getDt() {
         return dt;
     }
+
+    @Override
+    public String toString() {
+        return "CityOwResponse{" +
+                "wind=" + wind +
+                ", main=" + main +
+                ", name='" + name + '\'' +
+                ", dt=" + dt +
+                '}';
+    }
 }
 
 

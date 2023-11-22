@@ -25,14 +25,6 @@ public class CityWeatherService {
                 city.getWind().getWind(),
                 city.getMain().getPressure());
 
-        CityDataEntity cityDataEntity = new CityDataEntity();
-        cityDataEntity.setName(cityWeatherDataResponse.getCityName());
-//        cityDataEntity.setId(city.);
-        cityDataEntity.setName(cityWeatherDataResponse.getCityName());
-
-        CityWeatherDb cityWeatherDb = new CityWeatherDb();
-        WeatherDataEntity weatherDataEntity = new WeatherDataEntity();
-//        weatherDataEntity.setCityId(cityOwR.);
     }
 
 }

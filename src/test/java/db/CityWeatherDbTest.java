@@ -8,19 +8,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityWeatherDbTest {
-    private static CityWeatherDb dataBase;// = new CityWeatherDb();
-
+    private CityWeatherDb dataBase;// = new CityWeatherDb();
+    private final Long cityDataEntity = 1L;
     @BeforeEach
     void generateDataBase(){
         dataBase = new CityWeatherDb();
         long id = 1L;
         String cityName = "Warsaw";
         CityDataEntity cityDataEntity = new CityDataEntity();
-        cityDataEntity.setId(1L);
-        cityDataEntity.setName("Warsaw");
+        cityDataEntity.setId(id);
+        cityDataEntity.setName(cityName);
         dataBase.add(cityDataEntity);
     }
+    @AfterEach
+    void clearDatabase(){
 
+    }
 
     @Test
     void addMethodTest() {
@@ -41,7 +44,17 @@ class CityWeatherDbTest {
     @Test
     void removeMethodTest() {
         //given
-        CityDataEntity cityToRemove = dataBase.get(1L);
+        CityDataEntity cityToRemove = dataBase.get(cityDataEntity);
+        //when
+        dataBase.remove(cityToRemove);
+        //then
+        assertNull(dataBase.get(1L));
+    }
+
+    @Test
+    void removeNoneMethodTest() {
+        //given
+        CityDataEntity cityToRemove = dataBase.get(cityDataEntity);
         //when
         dataBase.remove(cityToRemove);
         //then
@@ -53,7 +66,7 @@ class CityWeatherDbTest {
         //given
         //when
 
-        CityDataEntity result = dataBase.get(1L);
+        CityDataEntity result = dataBase.get(cityDataEntity);
         //then
         Assertions.assertEquals(result.getName(), "Warsaw");
     }
@@ -63,13 +76,13 @@ class CityWeatherDbTest {
         //given
 
         CityDataEntity changedCityDataEntity = new CityDataEntity();
-        changedCityDataEntity.setId(1L);
+        changedCityDataEntity.setId(cityDataEntity);
         String newName = "WarsawAAA";
         changedCityDataEntity.setName("WarsawAAA");
 
         //when
         dataBase.change(changedCityDataEntity);
-        CityDataEntity result = dataBase.get(1L);
+        CityDataEntity result = dataBase.get(cityDataEntity);
 
         //then
         Assertions.assertEquals(result.getName(), "WarsawAAA");

@@ -3,6 +3,8 @@ package services;
 import api.CityWeatherDataResponse;
 import api.HttpClientService;
 import api.open_weather.CityOwResponse;
+import db.CityWeatherDb;
+import db.WeatherDataEntity;
 
 public class WeatherService {
 

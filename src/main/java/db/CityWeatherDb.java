@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CityWeatherDb {
-    private static final Map<Long, CityDataEntity> dataBase = new HashMap<>();
+    private static final Map<Long, CityDataEntity> dataBase = new HashMap<>();  //dataBase
+
 
     public CityDataEntity get(Long id){
         return dataBase.get(id);

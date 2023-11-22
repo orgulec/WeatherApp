@@ -12,7 +12,7 @@ public class CityWeatherDataResponse {
     private Float windSpeed;
     private Float pressure;
 
-    public CityWeatherDataResponse(String cityName, LocalDateTime date, Float temperature, Float windSpeed, Float pressure) {
+    private CityWeatherDataResponse(String cityName, LocalDateTime date, Float temperature, Float windSpeed, Float pressure) {
         this.cityName = cityName;
         this.date = date;
         this.temperature = temperature;
@@ -20,7 +20,7 @@ public class CityWeatherDataResponse {
         this.pressure = pressure;
     }
 
-    public String getCityName() {
+/*    public String getCityName() {
         return cityName;
     }
 
@@ -38,5 +38,5 @@ public class CityWeatherDataResponse {
 
     public Float getPressure() {
         return pressure;
-    }
+    }*/
 }

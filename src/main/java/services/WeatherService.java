@@ -2,6 +2,7 @@ package services;
 
 import api.HttpClientService;
 import api.open_weather.CityOwResponse;
+import api.weatherstack.CityWsResponse;
 
 public class WeatherService {
 
@@ -15,21 +16,27 @@ public class WeatherService {
         String openWeatherUrl = baseUrl + appIsQuery + "&" + cityNameQuery + "&" + unitsQuery;
 
         var httpClientService = new HttpClientService<CityOwResponse>();
+        CityOwResponse response = httpClientService.getWeather(openWeatherUrl, CityOwResponse.class);
+
         try {
-            CityOwResponse response = httpClientService.getWeather(openWeatherUrl, CityOwResponse.class);
             return response;
         } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
     }
 
-//    public CityWsResponse getWeatherFromWeatherStack() {
-//        String weatherStackUrl = "http://api.weatherstack.com/current?access_key=0265d146105fc401377ecbfca92e4fb0&query=Warsaw";
-//
-//        var httpClientService = new HttpClientService<CityOwResponse>();
-//        final CityWsResponse response = httpClientService.getWeather(weatherStackUrl, CityWsResponse.class);
-//
-//        return response;
-//    }
+    public CityWsResponse getWeatherFromWeatherStack() {
+        String weatherStackUrl = "http://api.weatherstack.com/current?access_key=0265d146105fc401377ecbfca92e4fb0&query=Warsaw";
+
+        var httpClientService = new HttpClientService<CityWsResponse>();
+        final CityWsResponse response = httpClientService.getWeather(weatherStackUrl, CityWsResponse.class);
+
+        try {
+            return response;
+        } catch (NullPointerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

@@ -1,9 +1,8 @@
 import api.open_weather.CityOwResponse;
+import services.ApiWeatherService;
 import services.WeatherService;
 
 import java.util.Scanner;
-
-import static services.CityWeatherService.getWeatherFromOpenWeatherWithNewCity;
 
 public class Main {
     public static void main(String[] args) {
@@ -53,8 +52,8 @@ public class Main {
         System.out.println("Type a name of the city:");
         Scanner sc2 = new Scanner(System.in);
         String newCity = sc2.nextLine();
-//                    CityOwResponse weatherFromOpenWeatherWithNewCity = getWeatherFromOpenWeatherWithNewCity(newCity);
-        final CityOwResponse weatherFromOpenWeatherWithNewCity = new WeatherService().getWeatherFromOpenWeather(newCity);
+//        final CityOwResponse weatherFromOpenWeatherWithNewCity = new WeatherService().getWeatherFromOpenWeather(newCity);
+        final CityOwResponse weatherFromOpenWeatherWithNewCity = (CityOwResponse) new ApiWeatherService().getWeatherFromWeatherApi(newCity,CityOwResponse.class);
         String message = """
                 ---------
                 City name:      [%s]

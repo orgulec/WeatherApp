@@ -75,7 +75,7 @@ public class CityOwResponse {
    },
    "visibility":6000,
    "wind":{       ////////////
-      "speed":4.12,
+      "speed":4.12,       ////////////
       "deg":70
    },
    "snow":{
@@ -84,7 +84,7 @@ public class CityOwResponse {
    "clouds":{
       "all":75
    },
-   "dt":1700504090,
+   "dt":1700504090,       ////////////
    "sys":{
       "type":2,
       "id":2032856,

@@ -1,10 +1,9 @@
-package api.weatherstack;
-
-import api.open_weather.CityOwResponse;
+package api.open_weather;
 
 import java.time.LocalDateTime;
 
-public class WeatherStackService {
+public class OpenWeatherService {
+
     private String cityName;
     private LocalDateTime date;
 
@@ -12,12 +11,12 @@ public class WeatherStackService {
     private Float windSpeed;
     private Float pressure;
 
-    public WeatherStackService(CityWsResponse cityWsResponse) {
-        this.cityName = cityWsResponse.getLocation().getName();
-        this.date = cityWsResponse.getLocation().getLocaltime();
-        this.temperature = cityWsResponse.getCurrent().getTemperature();
-        this.windSpeed = cityWsResponse.getCurrent().getWind_speed();
-        this.pressure = cityWsResponse.getCurrent().getPressure();
+    public OpenWeatherService(CityOwResponse cityOwResponse) {
+        this.cityName = cityOwResponse.getName();
+        this.date = cityOwResponse.getDt();
+        this.temperature = cityOwResponse.getMain().temp;
+        this.windSpeed = cityOwResponse.getWind().getWind();
+        this.pressure = cityOwResponse.main.getPressure();
     }
 
     public String getCityName() {

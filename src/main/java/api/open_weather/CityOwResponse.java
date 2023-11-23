@@ -8,7 +8,7 @@ public class CityOwResponse {
     String name;
     LocalDateTime dt;
 
-    public CityOwResponse(Wind wind, Main main, String name, LocalDateTime dt) {
+    private CityOwResponse(Wind wind, Main main, String name, LocalDateTime dt) {
         this.wind = wind;
         this.main = main;
         this.name = name;
@@ -30,6 +30,7 @@ public class CityOwResponse {
     public LocalDateTime getDt() {
         return dt;
     }
+
 }
 
 
@@ -65,7 +66,7 @@ public class CityOwResponse {
    },
    "visibility":6000,
    "wind":{       ////////////
-      "speed":4.12,
+      "speed":4.12,       ////////////
       "deg":70
    },
    "snow":{
@@ -74,7 +75,7 @@ public class CityOwResponse {
    "clouds":{
       "all":75
    },
-   "dt":1700504090,
+   "dt":1700504090,       ////////////
    "sys":{
       "type":2,
       "id":2032856,

@@ -43,9 +43,7 @@ public class HttpClientService<T> {
 
             return gson.fromJson(bodyAsString, responseClass);
 //            System.out.println(bodyAsString);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,10 +1,9 @@
-package api;
+package api.open_weather;
 
 import java.time.LocalDateTime;
 
-public class CityWeatherDataResponse {
-    //klasa do ładowania danych z Jsona
-    //nazwy pól muszą pokrywać się z nazwami pól w obiekcie Json!!!
+public class OpenWeatherService {
+
     private String cityName;
     private LocalDateTime date;
 
@@ -12,12 +11,12 @@ public class CityWeatherDataResponse {
     private Float windSpeed;
     private Float pressure;
 
-    public CityWeatherDataResponse(String cityName, LocalDateTime date, Float temperature, Float windSpeed, Float pressure) {
-        this.cityName = cityName;
-        this.date = date;
-        this.temperature = temperature;
-        this.windSpeed = windSpeed;
-        this.pressure = pressure;
+    public OpenWeatherService(CityOwResponse cityOwResponse) {
+        this.cityName = cityOwResponse.getName();
+        this.date = cityOwResponse.getDt();
+        this.temperature = cityOwResponse.getMain().temp;
+        this.windSpeed = cityOwResponse.getWind().getWind();
+        this.pressure = cityOwResponse.main.getPressure();
     }
 
     public String getCityName() {

@@ -4,7 +4,7 @@ public class Main {
     Float temp;
     Float pressure;
 
-    public Main(Float temp, Float pressure) {
+    private Main(Float temp, Float pressure) {
         this.temp = temp;
         this.pressure = pressure;
     }

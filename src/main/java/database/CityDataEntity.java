@@ -1,4 +1,4 @@
-package db;
+package database;
 
 public class CityDataEntity {
     private Long id;
@@ -29,4 +29,6 @@ public class CityDataEntity {
     public void setWeatherDataEntity(WeatherDataEntity weatherDataEntity) {
         this.weatherDataEntity = weatherDataEntity;
     }
+
+
 }

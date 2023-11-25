@@ -1,7 +1,9 @@
 package api.dto;
 
-import api.open_weather.OpenWeatherService;
-import api.weatherstack.WeatherStackService;
+import api.open_weather.CityOwResponse;
+import api.open_weather.OpenWeatherDto;
+import api.weatherstack.CityWsResponse;
+import api.weatherstack.WeatherStackDto;
 
 import java.time.LocalDateTime;
 
@@ -16,19 +18,19 @@ public class CityWeatherDataResponse {
     private final Float pressure;
 
 
-    public CityWeatherDataResponse(OpenWeatherService weatherService) {
-        this.cityName = weatherService.getCityName();
-        this.date = weatherService.getDate();
-        this.temperature = weatherService.getTemperature();
-        this.windSpeed = weatherService.getWindSpeed();
-        this.pressure = weatherService.getPressure();
+    public CityWeatherDataResponse(CityOwResponse cityOwResponse) {
+        this.cityName = cityOwResponse.getName();
+        this.date = cityOwResponse.getDt();
+        this.temperature = cityOwResponse.getMain().getTemp();
+        this.windSpeed = cityOwResponse.getWind().getWind();
+        this.pressure = cityOwResponse.getMain().getPressure();
     }
-    public CityWeatherDataResponse(WeatherStackService weatherService) {
-        this.cityName = weatherService.getCityName();
-        this.date = weatherService.getDate();
-        this.temperature = weatherService.getTemperature();
-        this.windSpeed = weatherService.getWindSpeed();
-        this.pressure = weatherService.getPressure();
+    public CityWeatherDataResponse(CityWsResponse cityWsResponse) {
+        this.cityName = cityWsResponse.getLocation().getName();
+        this.date = cityWsResponse.getLocation().getLocaltime();
+        this.temperature = cityWsResponse.getCurrent().getTemperature();
+        this.windSpeed = cityWsResponse.getCurrent().getWind_speed();
+        this.pressure = cityWsResponse.getCurrent().getPressure();
     }
 
     public String getCityName() {

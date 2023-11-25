@@ -8,6 +8,7 @@ public class CityOwResponse {
     String name;
     LocalDateTime dt;
 
+
     private CityOwResponse(Wind wind, Main main, String name, LocalDateTime dt) {
         this.wind = wind;
         this.main = main;

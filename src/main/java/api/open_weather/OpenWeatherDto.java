@@ -2,7 +2,7 @@ package api.open_weather;
 
 import java.time.LocalDateTime;
 
-public class OpenWeatherService {
+public class OpenWeatherDto {
 
     private String cityName;
     private LocalDateTime date;
@@ -11,7 +11,7 @@ public class OpenWeatherService {
     private Float windSpeed;
     private Float pressure;
 
-    public OpenWeatherService(CityOwResponse cityOwResponse) {
+    public OpenWeatherDto(CityOwResponse cityOwResponse) {
         this.cityName = cityOwResponse.getName();
         this.date = cityOwResponse.getDt();
         this.temperature = cityOwResponse.getMain().temp;
@@ -37,5 +37,16 @@ public class OpenWeatherService {
 
     public Float getPressure() {
         return pressure;
+    }
+
+    @Override
+    public String toString() {
+        return "OpenWeatherDto{" +
+                "cityName='" + cityName + '\'' +
+                ", date=" + date +
+                ", temperature=" + temperature +
+                ", windSpeed=" + windSpeed +
+                ", pressure=" + pressure +
+                '}';
     }
 }

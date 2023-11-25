@@ -5,7 +5,7 @@ import api.open_weather.CityOwResponse;
 import api.weatherstack.CityWsResponse;
 
 public class WeatherService {
-
+/*
     public CityOwResponse getWeatherFromOpenWeather(String cityName) {
 //        String openWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=716238e6166ce6e1315daf3232959cd3&q=Warsaw&units=metric";
         String baseUrl = "https://api.openweathermap.org/data/2.5/weather?";
@@ -37,6 +37,6 @@ public class WeatherService {
             throw new RuntimeException(e);
         }
     }
-
+*/
 
 }

@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 
 public class Location {
     String name;
-    LocalDateTime localtime;
+    LocalDateTime localtime_epoch;
 
-    public Location(String name, LocalDateTime localtime) {
+    public Location(String name, LocalDateTime localtime_epoch) {
         this.name = name;
-        this.localtime = localtime;
+        this.localtime_epoch = localtime_epoch;
     }
 
     public String getName() {
@@ -16,6 +16,6 @@ public class Location {
     }
 
     public LocalDateTime getLocaltime() {
-        return localtime;
+        return localtime_epoch;
     }
 }

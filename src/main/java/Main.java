@@ -1,73 +1,55 @@
-import api.open_weather.CityOwResponse;
-import services.ApiWeatherService;
-import services.WeatherService;
 
+import handlers.FindCityByNameHandler;
 import java.util.Scanner;
+
+import static handlers.AutomaticDataBaseGenerator.*;
 
 public class Main {
     public static void main(String[] args) {
+        generateBasicDataBaseAtStart();
 
         var isRunning = true;
         var isFirstRun = true;
+
         while (isRunning) {
             isFirstRun = showWelcomeMenu(isFirstRun);
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
 
-            switch (userInput) {
-                case "X" -> isRunning = false;
-                case "Y" -> {
-                    final CityOwResponse weatherFromOpenWeather = new WeatherService().getWeatherFromOpenWeather("Warsaw");
-                    System.out.println("City name: " + weatherFromOpenWeather.getName());
-                    System.out.println("City date: " + weatherFromOpenWeather.getDt());
-                    System.out.println("City temp: " + weatherFromOpenWeather.getMain().getTemp());
-                    System.out.println("City pressure: " + weatherFromOpenWeather.getMain().getPressure());
-                    System.out.println("City wind: " + weatherFromOpenWeather.getWind().getWind());
+            switch (userInput.toUpperCase()) {
+                case "X" -> {
+                    System.out.println("Good Bye!");
+                    isRunning = false;
                 }
-                case "A" -> {
-                    showInputCityNameMenu();
+                case "2" -> {
+                    DATA_BASE.printAllDataEntities();
+                    isFirstRun = true;
+               }
+                case "1" -> {
+                    new FindCityByNameHandler().handle();
+                    isFirstRun = true;
                 }
-                default -> System.out.println("Error: Invalid input!");
+                default -> {
+                    System.out.println("Invalid input!");
+                    isFirstRun = true;
+                }
             }
         }
-
     }
 
     private static boolean showWelcomeMenu(boolean isFirstRun) {
         if (isFirstRun) {
-            System.out.println("""
+            System.out.println("\n"+"""
                     ----------------------
-                    WELCOME!
-                    type X to quit
-                    type Y to get a weather stats
-                    type A to input a new city name into database
+                    WELCOME in Avarage Weather App!
+                    Press:
+                    1. to input a new city name into database
+                    2. to print city database
+                    X to quit
                     ----------------------
                     """);
             isFirstRun = false;
         }
         return isFirstRun;
     }
-
-    private static void showInputCityNameMenu() {
-        System.out.println("Type a name of the city:");
-        Scanner sc2 = new Scanner(System.in);
-        String newCity = sc2.nextLine();
-//        final CityOwResponse weatherFromOpenWeatherWithNewCity = new WeatherService().getWeatherFromOpenWeather(newCity);
-        final CityOwResponse weatherFromOpenWeatherWithNewCity = (CityOwResponse) new ApiWeatherService().getWeatherFromWeatherApi(newCity,CityOwResponse.class);
-        String message = """
-                ---------
-                City name:      [%s]
-                City date:      [%s]
-                City temp:      [%s]
-                City pressure:  [%s]
-                City wind:      [%s]
-                """.formatted(
-                weatherFromOpenWeatherWithNewCity.getName(),
-                weatherFromOpenWeatherWithNewCity.getDt(),
-                weatherFromOpenWeatherWithNewCity.getMain().getTemp(),
-                weatherFromOpenWeatherWithNewCity.getMain().getPressure(),
-                weatherFromOpenWeatherWithNewCity.getWind().getWind());
-        System.out.println(message);
-    }
-
 }

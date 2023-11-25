@@ -6,8 +6,8 @@ import api.open_weather.Wind;
 import java.time.LocalDateTime;
 
 public class CityWsResponse {
-    Current current;
-    Location location;
+    private final Current current;
+    private final Location location;
 
     public CityWsResponse(Current current, Location location) {
         this.current = current;
@@ -18,17 +18,11 @@ public class CityWsResponse {
         return current;
     }
 
-    public void setCurrent(Current current) {
-        this.current = current;
-    }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 }
 
 

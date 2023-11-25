@@ -4,11 +4,13 @@ public class Current {
     Float temperature;
     Float wind_speed;
     Float pressure;
+    Float cloudcover;
 
-    public Current(Float temperature, Float wind_speed, Float pressure) {
+    public Current(Float temperature, Float wind_speed, Float pressure, Float cloudcover) {
         this.temperature = temperature;
         this.wind_speed = wind_speed;
         this.pressure = pressure;
+        this.cloudcover = cloudcover;
     }
 
     public Float getTemperature() {
@@ -21,5 +23,9 @@ public class Current {
 
     public Float getPressure() {
         return pressure;
+    }
+
+    public Float getCloudcover() {
+        return cloudcover;
     }
 }

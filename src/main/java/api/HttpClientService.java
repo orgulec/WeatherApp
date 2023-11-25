@@ -12,14 +12,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 
 public class HttpClientService<T> {
 
     private static HttpClient client = HttpClient.newHttpClient();  //klasa do doobsługi protokołu http
-    public T getWeather(String url, Class<T> responseClass){
+    public T getWeather(String url, Class<T> responseClass/*, Function<JsonElement, LocalDateTime> localDateTimeMapper*/){
         var request = HttpRequest
                 .newBuilder()   //wzorzec projektowy
                 .uri(URI.create(url)) //ścieżka dostępu do API
@@ -30,26 +28,48 @@ public class HttpClientService<T> {
         try {
             var bodyAsString = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
 
+
             final Gson gson = new GsonBuilder().registerTypeAdapter(
                     LocalDateTime.class,
                     new JsonDeserializer<LocalDateTime>() {
                         @Override   //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
                         public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
                             var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
-                            return LocalDateTime.ofInstant(Instant.ofEpochMilli(dateTimeJson), ZoneId.systemDefault());
+//                            return LocalDateTime.ofInstant(Instant.ofEpochMilli(dateTimeJson), ZoneId.systemDefault());   //oryginalny !!!
+
+                            return LocalDateTime.ofEpochSecond(dateTimeJson, 0, ZoneOffset.UTC);
                         }
                     }
             ).create();
 
             return gson.fromJson(bodyAsString, responseClass);
-//            System.out.println(bodyAsString);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }
+
+
+/*
+            final Gson gson = new GsonBuilder().registerTypeAdapter(
+                    LocalDateTime.class,
+                    new JsonDeserializer<LocalDateTime>() {
+                        @Override   //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
+                        public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                            LocalDateTime result = null;
+                            if (responseClass.equals(CityWsResponse.class)) {
+                                var dateTimeJson = json.getAsJsonPrimitive().get();
+                                result = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateTimeJson), ZoneId.systemDefault());
+                            }
+                            if(responseClass.equals(CityOwResponse.class)){
+                                var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
+                                result = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong()), ZoneId.systemDefault());
+                            }
+                            return result;
+                        }
+                    }
+            ).create();*/
+
 /*
 public class HttpClientService<T> {
 

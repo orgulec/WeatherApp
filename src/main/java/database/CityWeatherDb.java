@@ -24,14 +24,14 @@ public class CityWeatherDb {
         dataBase.put(newId, entity);
     }
 
-    public void remove(CityDataEntity entity) {
+    public void removeCityDataEntity(CityDataEntity entity) {
         if (entity == null) {
             throw new IllegalArgumentException();
         }
         dataBase.remove(entity.getCityId());
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException();
         }
@@ -48,23 +48,19 @@ public class CityWeatherDb {
         return newCityDataEntity;
     }
 
-//    public static List<CityDataEntity> getCitiesFromDb(CityDataEntity cityDataEntity){
     public static List<CityDataEntity> getCitiesFromDb(String cityName){
         return dataBase.values()
                 .stream()
                 .filter(
-//                        a -> Objects.equals(a.getCityId(), cityDataEntity.getCityId())
                         a -> a.getCityName().equalsIgnoreCase(cityName)
                 ).collect(Collectors.toList());
     }
 
-//    public boolean checkIfDbContainsCityName(CityDataEntity cityDataEntity){
     public static boolean checkIfDbContainsCityName(String cityName){
         return dataBase.values()
                 .stream()
                 .anyMatch(
                         a-> a.getCityName().equalsIgnoreCase(cityName)
-//                        a-> a.getCityName().equalsIgnoreCase(cityDataEntity.getCityName())
                 );
     }
 

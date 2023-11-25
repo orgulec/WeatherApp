@@ -25,7 +25,7 @@ public class FindCityByNameHandler {
             listOfCityDataEntities.addAll(
                     getCitiesFromDb(newCity)
             );
-            System.out.println("Getting cities from DB...");
+            System.out.println("Getting city from DB...");
         } else {
            WeatherDataEntity wsApiWeather =
                     new WeatherDataEntity((CityWsResponse)
@@ -38,7 +38,7 @@ public class FindCityByNameHandler {
             CityDataEntity owCityWeather = new CityDataEntity(newCity, owApiWeather);
             listOfCityDataEntities.add(wsCityWeather);
             listOfCityDataEntities.add(owCityWeather);
-            System.out.println("Getting cities from API...");
+            System.out.println("Getting city from API...");
         }
 
         showAverageWeatherData(listOfCityDataEntities);
@@ -53,6 +53,7 @@ public class FindCityByNameHandler {
             Float temperature = 0f;
             Float pressure = 0f;
             Float windSpeed = 0f;
+            Float cloudcover = 0f;
         };
 
         listOfCityDataEntities.forEach(
@@ -62,21 +63,25 @@ public class FindCityByNameHandler {
                     result.temperature += ct.getWeatherDataEntity().getTemperature();
                     result.pressure += ct.getWeatherDataEntity().getPressure();
                     result.windSpeed += ct.getWeatherDataEntity().getWindSpeed();
+                    result.cloudcover += ct.getWeatherDataEntity().getCloudcover();
                 }
         );
 
         result.temperature = result.temperature/iterator;
         result.pressure = result.pressure/iterator;
         result.windSpeed = result.windSpeed/iterator;
+        result.cloudcover = result.cloudcover/iterator;
 
         String message = """
-                ---------
+                -------------------
                 Averange Weather Data:
                 City name:      [%s]
                 City date:      [%s]
                 City temp:      [%s]
                 City pressure:  [%s]
                 City wind:      [%s]
+                City clouds:    [%s]
+                
                 (Nr of APIs:    [%s])
                 """.formatted(
                 result.name,
@@ -84,8 +89,9 @@ public class FindCityByNameHandler {
                 result.temperature,
                 result.pressure,
                 result.windSpeed,
+                result.cloudcover,
                 iterator);
-        System.out.println(message+"\n---------");
+        System.out.println(message);
     }
 
 

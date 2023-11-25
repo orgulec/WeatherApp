@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 public class OpenWeatherDto {
 
-    private String cityName;
-    private LocalDateTime date;
+    private final String cityName;
+    private final LocalDateTime date;
 
-    private Float temperature;
-    private Float windSpeed;
-    private Float pressure;
+    private final Float temperature;
+    private final Float windSpeed;
+    private final Float pressure;
+    private final Float cloudcover;
 
     public OpenWeatherDto(CityOwResponse cityOwResponse) {
         this.cityName = cityOwResponse.getName();
@@ -17,36 +18,7 @@ public class OpenWeatherDto {
         this.temperature = cityOwResponse.getMain().temp;
         this.windSpeed = cityOwResponse.getWind().getWind();
         this.pressure = cityOwResponse.main.getPressure();
+        this.cloudcover = cityOwResponse.getClouds().getAll();
     }
 
-    public String getCityName() {
-        return cityName;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public Float getTemperature() {
-        return temperature;
-    }
-
-    public Float getWindSpeed() {
-        return windSpeed;
-    }
-
-    public Float getPressure() {
-        return pressure;
-    }
-
-    @Override
-    public String toString() {
-        return "OpenWeatherDto{" +
-                "cityName='" + cityName + '\'' +
-                ", date=" + date +
-                ", temperature=" + temperature +
-                ", windSpeed=" + windSpeed +
-                ", pressure=" + pressure +
-                '}';
-    }
 }

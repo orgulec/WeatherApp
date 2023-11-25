@@ -3,16 +3,18 @@ package api.open_weather;
 import java.time.LocalDateTime;
 
 public class CityOwResponse {
-    Wind wind;
-    Main main;
-    String name;
-    LocalDateTime dt;
+    private final Wind wind;
+    final Main main;
+    private final String name;
+    private final LocalDateTime dt;
+    private final Clouds clouds;
 
 
-    private CityOwResponse(Wind wind, Main main, String name, LocalDateTime dt) {
+    private CityOwResponse(Wind wind, Main main, String name, Clouds clouds, LocalDateTime dt) {
         this.wind = wind;
         this.main = main;
         this.name = name;
+        this.clouds = clouds;
         this.dt = dt;
     }
 
@@ -32,6 +34,9 @@ public class CityOwResponse {
         return dt;
     }
 
+    public Clouds getClouds() {
+        return clouds;
+    }
 }
 
 

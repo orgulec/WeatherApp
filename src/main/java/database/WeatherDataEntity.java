@@ -2,64 +2,60 @@ package database;
 
 import api.open_weather.CityOwResponse;
 import api.weatherstack.CityWsResponse;
+
 import java.time.LocalDateTime;
 
 public class WeatherDataEntity {
     private Long cityId;
-    private LocalDateTime date;
-    private Float temperature;
-    private Float windSpeed;
-    private Float pressure;
+    private final LocalDateTime date;
+    private final Float temperature;
+    private final Float windSpeed;
+    private final Float pressure;
+    private final Float cloudcover;
 
     public WeatherDataEntity(CityOwResponse cityOwResponse) {
         this.date = cityOwResponse.getDt();
         this.temperature = cityOwResponse.getMain().getTemp();
         this.windSpeed = cityOwResponse.getWind().getWind();
         this.pressure = cityOwResponse.getMain().getPressure();
+        this.cloudcover = cityOwResponse.getClouds().getAll();
     }
+
     public WeatherDataEntity(CityWsResponse cityWsResponse) {
         this.date = cityWsResponse.getLocation().getLocaltime();
         this.temperature = cityWsResponse.getCurrent().getTemperature();
         this.windSpeed = cityWsResponse.getCurrent().getWind_speed();
         this.pressure = cityWsResponse.getCurrent().getPressure();
+        this.cloudcover = cityWsResponse.getCurrent().getCloudcover();
     }
 
 
     public Long getCityId() {
         return cityId;
     }
+
     public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
-/*    public Long getCityId() {
-        return cityId;
-    }
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }*/
+
     public LocalDateTime getDate() {
         return date;
     }
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+
     public Float getTemperature() {
         return temperature;
     }
-    public void setTemperature(Float temperature) {
-        this.temperature = temperature;
-    }
+
     public Float getWindSpeed() {
         return windSpeed;
     }
-    public void setWindSpeed(Float windSpeed) {
-        this.windSpeed = windSpeed;
-    }
+
     public Float getPressure() {
         return pressure;
     }
-    public void setPressure(Float pressure) {
-        this.pressure = pressure;
+
+    public Float getCloudcover() {
+        return cloudcover;
     }
 
     @Override
@@ -69,6 +65,7 @@ public class WeatherDataEntity {
                 " " + date +
                 ", " + temperature +
                 ", " + windSpeed +
-                ", " + pressure + "] ";
+                ", " + pressure +
+                ", " + cloudcover + "] ";
     }
 }

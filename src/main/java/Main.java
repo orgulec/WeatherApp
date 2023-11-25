@@ -1,88 +1,55 @@
 
-import api.weatherstack.CityWsResponse;
-import database.CityDataEntity;
-import database.CityWeatherDb;
-import database.WeatherDataEntity;
 import handlers.FindCityByNameHandler;
-import services.ApiWeatherService;
-
-import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    public static final CityWeatherDb DATA_BASE = new CityWeatherDb();
-    public static void main(String[] args) {
+import static handlers.AutomaticDataBaseGenerator.*;
 
+public class Main {
+    public static void main(String[] args) {
         generateBasicDataBaseAtStart();
 
         var isRunning = true;
         var isFirstRun = true;
+
         while (isRunning) {
             isFirstRun = showWelcomeMenu(isFirstRun);
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
 
-            switch (userInput) {
-                case "X" -> isRunning = false;
-                case "Y" -> {
-//                    final CityOwResponse weatherFromOpenWeather = new WeatherService().getWeatherFromOpenWeather("Warsaw");
-//                    System.out.println("City name: " + weatherFromOpenWeather.getName());
-//                    System.out.println("City date: " + weatherFromOpenWeather.getDt());
-//                    System.out.println("City temp: " + weatherFromOpenWeather.getMain().getTemp());
-//                    System.out.println("City pressure: " + weatherFromOpenWeather.getMain().getPressure());
-//                    System.out.println("City wind: " + weatherFromOpenWeather.getWind().getWind());
+            switch (userInput.toUpperCase()) {
+                case "X" -> {
+                    System.out.println("Good Bye!");
+                    isRunning = false;
                 }
-                case "A" -> {
+                case "2" -> {
+                    DATA_BASE.printAllDataEntities();
+                    isFirstRun = true;
+               }
+                case "1" -> {
                     new FindCityByNameHandler().handle();
+                    isFirstRun = true;
                 }
-                default -> System.out.println("Error: Invalid input!");
+                default -> {
+                    System.out.println("Invalid input!");
+                    isFirstRun = true;
+                }
             }
         }
-
-    }
-
-    private static void generateBasicDataBaseAtStart() {
-        System.out.println("Initalizing Application...!");
-
-        final List<String> popularCities = List.of("Warsaw", "Cracow", "Szczecin", "Katowice", "Gdansk", "Bydgoszcz","Poznan","Wroclaw","Gdynia");
-        popularCities
-                .forEach(cityName -> {
-                    final CityWsResponse result = (CityWsResponse) new ApiWeatherService().getWeatherFromWeatherApi(cityName, CityWsResponse.class);
-                    final WeatherDataEntity cityWeatherMapped = new WeatherDataEntity(result);
-                    CityDataEntity cityDataEntity = new CityDataEntity(cityName, cityWeatherMapped);
-
-                    if(DATA_BASE.checkIfDbContainsCityName(cityName)){
-                        cityDataEntity=DATA_BASE.changeCityIdWhenDoubleCityName(cityDataEntity);
-                    }
-                    DATA_BASE.add(cityDataEntity);
-
-                });
-        DATA_BASE.printAllDataEntities();
     }
 
     private static boolean showWelcomeMenu(boolean isFirstRun) {
         if (isFirstRun) {
-            System.out.println("""
+            System.out.println("\n"+"""
                     ----------------------
-                    WELCOME!
-                    type X to quit
-                    type Y to get a weather stats
-                    type A to input a new city name into database
+                    WELCOME in Avarage Weather App!
+                    Press:
+                    1. to input a new city name into database
+                    2. to print city database
+                    X to quit
                     ----------------------
                     """);
             isFirstRun = false;
         }
         return isFirstRun;
     }
-
-
-
 }
-
-/*
-weatherFromOpenWeatherWithNewCity.getName(),
-                weatherFromOpenWeatherWithNewCity.getDt(),
-                weatherFromOpenWeatherWithNewCity.getMain().getTemp(),
-                weatherFromOpenWeatherWithNewCity.getMain().getPressure(),
-                weatherFromOpenWeatherWithNewCity.getWind().getWind());
- */

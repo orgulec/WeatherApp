@@ -3,8 +3,8 @@ package api.weatherstack;
 import java.time.LocalDateTime;
 
 public class Location {
-    String name;
-    LocalDateTime localtime_epoch;
+    final String name;
+    final LocalDateTime localtime_epoch;
 
     public Location(String name, LocalDateTime localtime_epoch) {
         this.name = name;

@@ -2,6 +2,7 @@ package services;
 
 import api.HttpClientService;
 import api.open_weather.CityOwResponse;
+import api.weatherbit.CityWbResponse;
 import api.weatherstack.CityWsResponse;
 
 public class ApiWeatherService<T> {
@@ -22,6 +23,12 @@ public class ApiWeatherService<T> {
             appIsQuery = "access_key=0265d146105fc401377ecbfca92e4fb0";
             cityNameQuery = "query=" + cityName;
             unitsQuery = "";
+        } else if (responseClass.equals(CityWbResponse.class)){
+            //http://api.weatherbit.io/v2.0/current?key=d74a3b255a1d411bae7fa4029a91e696&lang=en&units=metrics&city=Warsaw
+            baseUrl = "http://api.weatherbit.io/v2.0/current?";
+            appIsQuery = "key=d74a3b255a1d411bae7fa4029a91e696&lang";
+            cityNameQuery = "&city=" + cityName;
+            unitsQuery = "&units=metrics";
         }
 
         String openWeatherUrl = baseUrl + appIsQuery + "&" + cityNameQuery + "&" + unitsQuery;

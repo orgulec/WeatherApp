@@ -27,21 +27,25 @@ public class FindCityByNameHandler {
             );
             System.out.println("Getting city from DB...");
         } else {
-           WeatherDataEntity wsApiWeather =
-                    new WeatherDataEntity((CityWsResponse)
-                            new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityWsResponse.class));
-            CityDataEntity wsCityWeather = new CityDataEntity(newCity, wsApiWeather);
+            try {
+                WeatherDataEntity wsApiWeather =
+                        new WeatherDataEntity((CityWsResponse)
+                                new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityWsResponse.class));
+                CityDataEntity wsCityWeather = new CityDataEntity(newCity, wsApiWeather);
 
-            WeatherDataEntity owApiWeather =
-                    new WeatherDataEntity((CityOwResponse)
-                            new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityOwResponse.class));
-            CityDataEntity owCityWeather = new CityDataEntity(newCity, owApiWeather);
-            listOfCityDataEntities.add(wsCityWeather);
-            listOfCityDataEntities.add(owCityWeather);
-            System.out.println("Getting city from API...");
+                WeatherDataEntity owApiWeather =
+                        new WeatherDataEntity((CityOwResponse)
+                                new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityOwResponse.class));
+                CityDataEntity owCityWeather = new CityDataEntity(newCity, owApiWeather);
+                listOfCityDataEntities.add(wsCityWeather);
+                listOfCityDataEntities.add(owCityWeather);
+                System.out.println("Getting city from API...");
+            }catch (NullPointerException e){
+                System.out.println("No such location founded.");
+            }
         }
-
-        showAverageWeatherData(listOfCityDataEntities);
+        if(!listOfCityDataEntities.isEmpty())
+            showAverageWeatherData(listOfCityDataEntities);
 
     }
 

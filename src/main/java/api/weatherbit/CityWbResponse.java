@@ -1,11 +1,18 @@
 package api.weatherbit;
 
-public class CityWbResponse {
-    public final O o;
 
-    public CityWbResponse(O o) {
-        this.o = o;
+public class CityWbResponse {
+
+    public DataWbElement[] data;        //change name
+
+    public CityWbResponse(DataWbElement[] data) {
+        this.data = data;
     }
+//    public final O o;
+
+//    public CityWbResponse(O o) {
+//        this.o = o;
+//    }
 }
 
 /*
@@ -14,8 +21,8 @@ data
 0
     app_temp	-1.9
     aqi	52
-    city_name	"Warsaw"
-    clouds	86
+    city_name	"Warsaw"    ////
+    clouds	86  ///
     country_code	"PL"
     datetime	"2023-11-25:22"
     dewpt	-0.1

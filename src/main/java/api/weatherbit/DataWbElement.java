@@ -2,7 +2,7 @@ package api.weatherbit;
 
 import java.time.LocalDateTime;
 
-public class O {
+public class DataWbElement {
     private final String city_name;
     private final LocalDateTime ts;
     private final Float app_temp;
@@ -10,7 +10,7 @@ public class O {
     private final Float pres;
     private final Float clouds;
 
-    public O(String city_name, LocalDateTime ts, Float app_temp, Float wind_spd, Float pres, Float clouds) {
+    public DataWbElement(String city_name, LocalDateTime ts, Float app_temp, Float wind_spd, Float pres, Float clouds) {
         this.city_name = city_name;
         this.ts = ts;
         this.app_temp = app_temp;

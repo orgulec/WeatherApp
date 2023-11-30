@@ -1,13 +1,13 @@
 package api.open_weather;
 
-public class Wind {
+class Wind {
     private final Float speed;
 
     public Wind(Float wind) {
         this.speed = wind;
     }
 
-    public Float getWind() {
+    public Float getSpeed() {
         return speed;
     }
 

@@ -2,7 +2,7 @@ package api.weatherstack;
 
 import java.time.LocalDateTime;
 
-public class WeatherStackDto {
+class WeatherStackDto {
     private final String cityName;
     private final LocalDateTime date;
     private final Float temperature;

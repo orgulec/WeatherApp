@@ -1,11 +1,8 @@
 package api.weatherstack;
 
-import api.open_weather.Main;
-import api.open_weather.Wind;
-
 import java.time.LocalDateTime;
 
-public class CityWsResponse {
+class CityWsResponse {
     private final Current current;
     private final Location location;
 

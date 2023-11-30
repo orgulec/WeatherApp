@@ -1,5 +1,7 @@
 package database;
 
+import api.dto.CityWeatherDto;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,7 @@ public class CityWeatherDb {
         Long newId = generateId();
         dataBase.put(newId, entity);
     }
+
 
     public void removeCityDataEntity(CityDataEntity entity) {
         if (entity == null) {

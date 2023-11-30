@@ -2,7 +2,7 @@ package api.weatherbit;
 
 import java.time.LocalDateTime;
 
-public class DataWbElement {
+class DataWbElement {
     private final String city_name;
     private final LocalDateTime ts;
     private final Float app_temp;

@@ -2,7 +2,7 @@ package api.weatherstack;
 
 import java.time.LocalDateTime;
 
-public class Location {
+class Location {
     final String name;
     final LocalDateTime localtime_epoch;
 

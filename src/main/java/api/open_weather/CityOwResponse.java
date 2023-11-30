@@ -2,7 +2,7 @@ package api.open_weather;
 
 import java.time.LocalDateTime;
 
-public class CityOwResponse {
+class CityOwResponse {
     private final Wind wind;
     final Main main;
     private final String name;

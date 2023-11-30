@@ -1,18 +1,14 @@
 package api.weatherbit;
 
 
-public class CityWbResponse {
+class CityWbResponse {
 
     public DataWbElement[] data;        //change name
 
     public CityWbResponse(DataWbElement[] data) {
         this.data = data;
     }
-//    public final O o;
 
-//    public CityWbResponse(O o) {
-//        this.o = o;
-//    }
 }
 
 /*

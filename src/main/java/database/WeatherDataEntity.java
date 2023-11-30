@@ -1,8 +1,5 @@
 package database;
 
-import api.open_weather.CityOwResponse;
-import api.weatherbit.CityWbResponse;
-import api.weatherstack.CityWsResponse;
 
 import java.time.LocalDateTime;
 
@@ -14,28 +11,14 @@ public class WeatherDataEntity {
     private final Float pressure;
     private final Float cloudcover;
 
-    public WeatherDataEntity(CityOwResponse cityOwResponse) {
-        this.date = cityOwResponse.getDt();
-        this.temperature = cityOwResponse.getMain().getTemp();
-        this.windSpeed = cityOwResponse.getWind().getWind();
-        this.pressure = cityOwResponse.getMain().getPressure();
-        this.cloudcover = cityOwResponse.getClouds().getAll();
+    public WeatherDataEntity(Long cityId, LocalDateTime date, Float temperature, Float windSpeed, Float pressure, Float cloudcover) {
+        this.cityId = cityId;
+        this.date = date;
+        this.temperature = temperature;
+        this.windSpeed = windSpeed;
+        this.pressure = pressure;
+        this.cloudcover = cloudcover;
     }
-    public WeatherDataEntity(CityWsResponse cityWsResponse) {
-        this.date = cityWsResponse.getLocation().getLocaltime();
-        this.temperature = cityWsResponse.getCurrent().getTemperature();
-        this.windSpeed = cityWsResponse.getCurrent().getWind_speed();
-        this.pressure = cityWsResponse.getCurrent().getPressure();
-        this.cloudcover = cityWsResponse.getCurrent().getCloudcover();
-    }
-    public WeatherDataEntity(CityWbResponse cityWbResponse) {
-        this.date = cityWbResponse.o.getTs();
-        this.temperature = cityWbResponse.o.getApp_temp();
-        this.windSpeed = cityWbResponse.o.getWind_spd();
-        this.pressure = cityWbResponse.o.getPres();
-        this.cloudcover = cityWbResponse.o.getClouds();
-    }
-
 
     public Long getCityId() {
         return cityId;

@@ -35,7 +35,6 @@ public class HttpClientService<T> {
                         @Override   //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
                         public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
                             var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
-//                            return LocalDateTime.ofInstant(Instant.ofEpochMilli(dateTimeJson), ZoneId.systemDefault());   //oryginalny !!!
 
                             return LocalDateTime.ofEpochSecond(dateTimeJson, 0, ZoneOffset.UTC);
                         }

@@ -1,7 +1,5 @@
 package database;
 
-import api.dto.CityWeatherDto;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

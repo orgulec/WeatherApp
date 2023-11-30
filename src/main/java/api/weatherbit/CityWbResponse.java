@@ -3,7 +3,7 @@ package api.weatherbit;
 
 class CityWbResponse {
 
-    public DataWbElement[] data;        //change name
+    public DataWbElement[] data;
 
     public CityWbResponse(DataWbElement[] data) {
         this.data = data;

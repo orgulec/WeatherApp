@@ -35,6 +35,7 @@ public class AutomaticDataBaseGenerator {
                     }catch(NullPointerException e){
                         System.out.println("No such a location founded - "+cityName);
                     }
-                });
+                }
+                );
     }
 }

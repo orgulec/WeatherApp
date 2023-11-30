@@ -21,36 +21,48 @@ public class FindCityByName {
         List<CityDataEntity> listOfCityDataEntities = new ArrayList<>();
 
         if (checkIfDbContainsCityName(newCity)) {
-            listOfCityDataEntities.addAll(
-                    getCitiesFromDb(newCity)
-            );
-            System.out.println("Getting city from DB...");
-        } else {
-            try {
-
-                WeatherApiService weatherApiService = new WeatherApiService();
-
-                CityWeatherDto[] dtoArray = new CityWeatherDto[]{
-                        weatherApiService.getDataFromOpenWeather(newCity),
-                        weatherApiService.getDataFromWeatherStack(newCity),
-                        weatherApiService.getDataFromWeatherBit(newCity)
-                };
-
-                for (CityWeatherDto cityWeatherDto : dtoArray) {
-                    CityDataEntity newWeatherDataEntity = new CityDataEntity(
-                            newCity, WeatherDataEntityMapper.fromCityWeatherDto(cityWeatherDto));
-                    listOfCityDataEntities.add(newWeatherDataEntity);
-                }
-
-
-                System.out.println("Getting city from API...");
-            }catch (NullPointerException e){
-                System.out.println("No such location founded.");
-            }
+            getFoundedCityNameFromDb(listOfCityDataEntities, newCity);
         }
+        else {
+            getCityNameFromApi(newCity, listOfCityDataEntities);
+        }
+
         if(!listOfCityDataEntities.isEmpty())
             showAverageWeatherData(listOfCityDataEntities);
+        else
+            System.out.println("No data founded!");
 
+    }
+
+    private static void getFoundedCityNameFromDb(List<CityDataEntity> listOfCityDataEntities, String newCity) {
+        listOfCityDataEntities.addAll(
+                getCitiesFromDb(newCity)
+        );
+        System.out.println("Getting city from DB...");
+    }
+
+    private static void getCityNameFromApi(String newCity, List<CityDataEntity> listOfCityDataEntities) {
+        try {
+
+            WeatherApiService weatherApiService = new WeatherApiService();
+
+            CityWeatherDto[] dtoArray = new CityWeatherDto[]{
+                    weatherApiService.getDataFromOpenWeather(newCity),
+                    weatherApiService.getDataFromWeatherStack(newCity),
+                    weatherApiService.getDataFromWeatherBit(newCity)
+            };
+
+            for (CityWeatherDto cityWeatherDto : dtoArray) {
+                CityDataEntity newWeatherDataEntity = new CityDataEntity(
+                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(cityWeatherDto));
+                listOfCityDataEntities.add(newWeatherDataEntity);
+            }
+
+
+            System.out.println("Getting city from API...");
+        }catch (NullPointerException e){
+            System.out.println("No such location founded.");
+        }
     }
 
     private static void showAverageWeatherData(List<CityDataEntity> listOfCityDataEntities) {

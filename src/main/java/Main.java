@@ -1,8 +1,8 @@
 
-import handlers.FindCityByNameHandler;
+import services.FindCityByName;
 import java.util.Scanner;
 
-import static handlers.AutomaticDataBaseGenerator.*;
+import static services.AutomaticDataBaseGenerator.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Main {
                     isFirstRun = true;
                }
                 case "1" -> {
-                    new FindCityByNameHandler().handle();
+                    new FindCityByName().serchForCity();
                     isFirstRun = true;
                 }
                 default -> {

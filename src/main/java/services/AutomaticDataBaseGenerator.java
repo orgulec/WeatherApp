@@ -1,4 +1,4 @@
-package handlers;
+package services;
 
 import api.WeatherApiService;
 import api.dto.CityWeatherDto;

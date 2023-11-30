@@ -1,4 +1,4 @@
-package handlers;
+package services;
 
 import api.WeatherApiService;
 import api.dto.CityWeatherDto;
@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 import static database.CityWeatherDb.*;
 
-public class FindCityByNameHandler {
-    public void handle() {
+public class FindCityByName {
+    public void serchForCity() {
         System.out.println("Type a name of the city:");
         Scanner sc2 = new Scanner(System.in);
         String newCity = sc2.nextLine();

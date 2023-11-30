@@ -28,15 +28,14 @@ public class HttpClientService<T> {
         try {
             var bodyAsString = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
 
-
             final Gson gson = new GsonBuilder().registerTypeAdapter(
                     LocalDateTime.class,
                     new JsonDeserializer<LocalDateTime>() {
                         @Override   //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
-                        public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                            var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
-
-                            return LocalDateTime.ofEpochSecond(dateTimeJson, 0, ZoneOffset.UTC);
+                        public LocalDateTime deserialize(
+                                JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                                var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
+                                return LocalDateTime.ofEpochSecond(dateTimeJson, 0, ZoneOffset.UTC);
                         }
                     }
             ).create();

@@ -19,20 +19,19 @@ public class AutomaticDataBaseGenerator {
                     try {
                         WeatherApiService weatherApiService = new WeatherApiService();
 
-                        CityWeatherDto dataFromOpenWeather = weatherApiService.getDataFromOpenWeather(cityName);
-                        CityWeatherDto dataFromWeatherStack = weatherApiService.getDataFromWeatherStack(cityName);
-                        CityWeatherDto dataFromWeatherBit = weatherApiService.getDataFromWeatherBit(cityName);
+                        CityWeatherDto[] dtoArray = new CityWeatherDto[]{
+                                weatherApiService.getDataFromOpenWeather(cityName),
+                                weatherApiService.getDataFromWeatherStack(cityName),
+                                weatherApiService.getDataFromWeatherBit(cityName)
+                        };
 
-                        CityDataEntity weatherDataEntityFromOw = new CityDataEntity(
-                                cityName, WeatherDataEntityMapper.fromCityWeatherDto(dataFromOpenWeather));
-                        CityDataEntity weatherDataEntityFromWs = new CityDataEntity(
-                                cityName, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherStack));
-                        CityDataEntity weatherDataEntityFromWb = new CityDataEntity(
-                                cityName, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherBit));
+                        for (CityWeatherDto cityWeatherDto : dtoArray) {
+                            CityDataEntity newWeatherDataEntity = new CityDataEntity(
+                                    cityName, WeatherDataEntityMapper.fromCityWeatherDto(cityWeatherDto));
+                            DATA_BASE.add(newWeatherDataEntity);
+                        }
 
-                        DATA_BASE.add(weatherDataEntityFromOw);
-                        DATA_BASE.add(weatherDataEntityFromWs);
-                        DATA_BASE.add(weatherDataEntityFromWb);
+
                     }catch(NullPointerException e){
                         System.out.println("No such a location founded - "+cityName);
                     }

@@ -30,20 +30,18 @@ public class FindCityByName {
 
                 WeatherApiService weatherApiService = new WeatherApiService();
 
-                CityWeatherDto dataFromOpenWeather = weatherApiService.getDataFromOpenWeather(newCity);
-                CityWeatherDto dataFromWeatherStack = weatherApiService.getDataFromWeatherStack(newCity);
-                CityWeatherDto dataFromWeatherBit = weatherApiService.getDataFromWeatherBit(newCity);
+                CityWeatherDto[] dtoArray = new CityWeatherDto[]{
+                        weatherApiService.getDataFromOpenWeather(newCity),
+                        weatherApiService.getDataFromWeatherStack(newCity),
+                        weatherApiService.getDataFromWeatherBit(newCity)
+                };
 
-                CityDataEntity weatherDataEntityFromOw = new CityDataEntity(
-                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromOpenWeather));
-                CityDataEntity weatherDataEntityFromWs = new CityDataEntity(
-                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherStack));
-                CityDataEntity weatherDataEntityFromWb = new CityDataEntity(
-                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherBit));
+                for (CityWeatherDto cityWeatherDto : dtoArray) {
+                    CityDataEntity newWeatherDataEntity = new CityDataEntity(
+                            newCity, WeatherDataEntityMapper.fromCityWeatherDto(cityWeatherDto));
+                    listOfCityDataEntities.add(newWeatherDataEntity);
+                }
 
-                listOfCityDataEntities.add(weatherDataEntityFromOw);
-                listOfCityDataEntities.add(weatherDataEntityFromWs);
-                listOfCityDataEntities.add(weatherDataEntityFromWb);
 
                 System.out.println("Getting city from API...");
             }catch (NullPointerException e){

@@ -1,6 +1,6 @@
 package api.weatherstack;
 
-public class Current {
+class Current {
     Float temperature;
     Float wind_speed;
     Float pressure;

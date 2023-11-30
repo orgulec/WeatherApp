@@ -1,10 +1,9 @@
 package handlers;
 
-import api.open_weather.CityOwResponse;
-import api.weatherstack.CityWsResponse;
+import api.WeatherApiService;
+import api.dto.CityWeatherDto;
 import database.CityDataEntity;
-import database.WeatherDataEntity;
-import services.ApiWeatherService;
+import database.WeatherDataEntityMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,17 +27,24 @@ public class FindCityByNameHandler {
             System.out.println("Getting city from DB...");
         } else {
             try {
-                WeatherDataEntity wsApiWeather =
-                        new WeatherDataEntity((CityWsResponse)
-                                new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityWsResponse.class));
-                CityDataEntity wsCityWeather = new CityDataEntity(newCity, wsApiWeather);
 
-                WeatherDataEntity owApiWeather =
-                        new WeatherDataEntity((CityOwResponse)
-                                new ApiWeatherService().getWeatherFromWeatherApi(newCity, CityOwResponse.class));
-                CityDataEntity owCityWeather = new CityDataEntity(newCity, owApiWeather);
-                listOfCityDataEntities.add(wsCityWeather);
-                listOfCityDataEntities.add(owCityWeather);
+                WeatherApiService weatherApiService = new WeatherApiService();
+
+                CityWeatherDto dataFromOpenWeather = weatherApiService.getDataFromOpenWeather(newCity);
+                CityWeatherDto dataFromWeatherStack = weatherApiService.getDataFromWeatherStack(newCity);
+                CityWeatherDto dataFromWeatherBit = weatherApiService.getDataFromWeatherBit(newCity);
+
+                CityDataEntity weatherDataEntityFromOw = new CityDataEntity(
+                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromOpenWeather));
+                CityDataEntity weatherDataEntityFromWs = new CityDataEntity(
+                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherStack));
+                CityDataEntity weatherDataEntityFromWb = new CityDataEntity(
+                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(dataFromWeatherBit));
+
+                listOfCityDataEntities.add(weatherDataEntityFromOw);
+                listOfCityDataEntities.add(weatherDataEntityFromWs);
+                listOfCityDataEntities.add(weatherDataEntityFromWb);
+
                 System.out.println("Getting city from API...");
             }catch (NullPointerException e){
                 System.out.println("No such location founded.");
@@ -81,12 +87,12 @@ public class FindCityByNameHandler {
                 Averange Weather Data:
                 City name:      [%s]
                 City date:      [%s]
-                City temp:      [%s]
-                City pressure:  [%s]
-                City wind:      [%s]
-                City clouds:    [%s]
+                City temp:      [%s] C
+                City pressure:  [%s] hPa
+                City wind:      [%s] m/s
+                City clouds:    [%s] percent
                 
-                (Nr of APIs:    [%s])
+                (Nr of used APIs: [%s])
                 """.formatted(
                 result.name,
                 result.date,
@@ -98,22 +104,4 @@ public class FindCityByNameHandler {
         System.out.println(message);
     }
 
-
-//    public void showWeatherStatisticsForCity(fromWs){
-//        String message = """
-//                ---------
-//                City name:      [%s]
-//                City date:      [%s]
-//                City temp:      [%s]
-//                City pressure:  [%s]
-//                City wind:      [%s]
-//                """.formatted(
-//                fromWs.getLocation().getName()+" / "+fromOw.getName(),
-//                fromWs.getLocation().getLocaltime()+" / "+fromOw.getDt(),
-//                fromWs.getCurrent().getTemperature()+" / "+fromOw.getMain().getTemp(),
-//                fromWs.getCurrent().getPressure()+" / "+fromOw.getMain().getPressure(),
-//                fromWs.getCurrent().getWind_speed()+" / "+fromOw.getWind().getWind())
-//                +"---------";
-//        System.out.println(message);
-//    }
 }

@@ -1,6 +1,6 @@
 package api.open_weather;
 
-public class Clouds {
+class Clouds {
     private final Float all;
 
     public Clouds(Float all) {

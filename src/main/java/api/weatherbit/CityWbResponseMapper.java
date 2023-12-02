@@ -18,6 +18,5 @@ class CityWbResponseMapper {
                 list.get(0).getPres(),
                 list.get(0).getClouds()
         );
-
     }
 }

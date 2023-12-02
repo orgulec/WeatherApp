@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import static database.CityWeatherDb.*;
+import static services.AutomaticDataBaseGenerator.DATA_BASE;
 
 public class FindCityByName {
-    public void serchForCity() {
+    public void searchForCity() {
         System.out.println("Type a name of the city:");
         Scanner sc2 = new Scanner(System.in);
         String newCity = sc2.nextLine();
@@ -22,12 +23,11 @@ public class FindCityByName {
 
         if (checkIfDbContainsCityName(newCity)) {
             getFoundedCityNameFromDb(listOfCityDataEntities, newCity);
-        }
-        else {
-            getCityNameFromApi(newCity, listOfCityDataEntities);
+        } else {
+            getCityNameFromApi(listOfCityDataEntities, newCity);
         }
 
-        if(!listOfCityDataEntities.isEmpty())
+        if (!listOfCityDataEntities.isEmpty())
             showAverageWeatherData(listOfCityDataEntities);
         else
             System.out.println("No data founded!");
@@ -41,26 +41,21 @@ public class FindCityByName {
         System.out.println("Getting city from DB...");
     }
 
-    private static void getCityNameFromApi(String newCity, List<CityDataEntity> listOfCityDataEntities) {
+    private static void getCityNameFromApi(List<CityDataEntity> listOfCityDataEntities, String newCity) {
         try {
 
             WeatherApiService weatherApiService = new WeatherApiService();
+            ArrayList<CityWeatherDto> apiServiceData = weatherApiService.getData(newCity);
 
-            CityWeatherDto[] dtoArray = new CityWeatherDto[]{
-                    weatherApiService.getDataFromOpenWeather(newCity),
-                    weatherApiService.getDataFromWeatherStack(newCity),
-                    weatherApiService.getDataFromWeatherBit(newCity)
-            };
-
-            for (CityWeatherDto cityWeatherDto : dtoArray) {
-                CityDataEntity newWeatherDataEntity = new CityDataEntity(
-                        newCity, WeatherDataEntityMapper.fromCityWeatherDto(cityWeatherDto));
-                listOfCityDataEntities.add(newWeatherDataEntity);
-            }
-
+            apiServiceData.forEach(getService -> {
+                        CityDataEntity newWeatherDataEntity = new CityDataEntity(newCity, WeatherDataEntityMapper.fromCityWeatherDto(getService));
+                        listOfCityDataEntities.add(newWeatherDataEntity);
+                    }
+            );
+            DATA_BASE.addList(listOfCityDataEntities);
 
             System.out.println("Getting city from API...");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No such location founded.");
         }
     }
@@ -87,21 +82,21 @@ public class FindCityByName {
                 }
         );
 
-        result.temperature = result.temperature/iterator;
-        result.pressure = result.pressure/iterator;
-        result.windSpeed = result.windSpeed/iterator;
-        result.cloudcover = result.cloudcover/iterator;
+        result.temperature = result.temperature / iterator;
+        result.pressure = result.pressure / iterator;
+        result.windSpeed = result.windSpeed / iterator;
+        result.cloudcover = result.cloudcover / iterator;
 
         String message = """
                 -------------------
                 Averange Weather Data:
-                City name:      [%s]
-                City date:      [%s]
-                City temp:      [%s] C
-                City pressure:  [%s] hPa
-                City wind:      [%s] m/s
-                City clouds:    [%s] percent
-                
+                * City name:      [%s]
+                * City date:      [%s]
+                * City temp:      [%s] C
+                * City pressure:  [%s] hPa
+                * City wind:      [%s] m/s
+                * City clouds:    [%s] percent
+                                
                 (Nr of used APIs: [%s])
                 """.formatted(
                 result.name,
@@ -112,6 +107,25 @@ public class FindCityByName {
                 result.cloudcover,
                 iterator);
         System.out.println(message);
+    }
+
+    public static void findAndRemoveCityFromDb() {
+        System.out.println("Type a name of the city to remove:");
+        Scanner sc = new Scanner(System.in);
+        String cityName = sc.nextLine();
+
+        List<CityDataEntity> listOfCityDataEntities = new ArrayList<>();
+        if (checkIfDbContainsCityName(cityName)) {
+            getFoundedCityNameFromDb(listOfCityDataEntities, cityName);
+        } else {
+            System.out.println("There is no such location in database.");
+        }
+        if (!listOfCityDataEntities.isEmpty()) {
+            listOfCityDataEntities.forEach(entity ->
+                    DATA_BASE.removeCityDataEntity(entity)
+            );
+            System.out.println(cityName + " was removed from database.");
+        }
     }
 
 }

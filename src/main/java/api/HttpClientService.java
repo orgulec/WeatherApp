@@ -15,8 +15,7 @@ import java.net.http.HttpResponse;
 import java.time.*;
 
 public class HttpClientService<T> {
-
-    private static HttpClient client = HttpClient.newHttpClient();  //klasa do doobsługi protokołu http
+    private static final HttpClient client = HttpClient.newHttpClient();  //klasa do doobsługi protokołu http
     public T getWeather(String url, Class<T> responseClass/*, Function<JsonElement, LocalDateTime> localDateTimeMapper*/){
         var request = HttpRequest
                 .newBuilder()   //wzorzec projektowy
@@ -27,7 +26,28 @@ public class HttpClientService<T> {
 
         try {
             var bodyAsString = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
+            final Gson gson = new GsonBuilder().registerTypeAdapter(
+                    LocalDateTime.class,
+                    (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
+                            var dateTimeJson = json.getAsJsonPrimitive().getAsLong();
+                            return LocalDateTime.ofEpochSecond(dateTimeJson, 0, ZoneOffset.UTC);
+                    }
+            ).create();
+            return gson.fromJson(bodyAsString, responseClass);
+        }
+        catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
 
+
+/*
+        try {
+            var bodyAsString = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+
+            //dla różnych API trzeba będzie zmieniać ten sposób pobierania daty!!!
             final Gson gson = new GsonBuilder().registerTypeAdapter(
                     LocalDateTime.class,
                     new JsonDeserializer<LocalDateTime>() {
@@ -39,14 +59,9 @@ public class HttpClientService<T> {
                         }
                     }
             ).create();
-
             return gson.fromJson(bodyAsString, responseClass);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
         }
-    }
-}
-
+ */
 
 /*
             final Gson gson = new GsonBuilder().registerTypeAdapter(

@@ -6,17 +6,13 @@ import api.dto.CityWeatherDto;
 public class WeatherStackApiService {
 
     public CityWeatherDto getData(String cityName) {
-        String baseUrl = "";
-        String appIsQuery = "";
-        String cityNameQuery = "";
+
+        String baseUrl = "http://api.weatherstack.com/current";
+        String appIsQuery = "access_key=0265d146105fc401377ecbfca92e4fb0";
+        String cityNameQuery = "query=" + cityName;
         String unitsQuery = "";
 
-        baseUrl = "http://api.weatherstack.com/current?";
-        appIsQuery = "access_key=0265d146105fc401377ecbfca92e4fb0";
-        cityNameQuery = "query=" + cityName;
-        unitsQuery = "";
-
-        String openWeatherUrl = baseUrl + appIsQuery + "&" + cityNameQuery + "&" + unitsQuery;
+        String openWeatherUrl = baseUrl + "?" + appIsQuery + "&" + cityNameQuery + "&" + unitsQuery;
         var httpClientService = new HttpClientService<CityWsResponse>();
 
         CityWsResponse response = httpClientService.getWeather(

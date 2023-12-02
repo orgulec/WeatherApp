@@ -1,7 +1,7 @@
 package database;
 
 public class CityDataEntity {
-    private static Long generatedCityId =0L;
+    private static Long generatedCityId = 0L;
     private Long cityId;
     private final String cityName;
     private final WeatherDataEntity weatherDataEntity;
@@ -14,7 +14,7 @@ public class CityDataEntity {
         this.weatherDataEntity.setCityId(cityId);
     }
 
-    public static Long generateCityId(){
+    public static Long generateCityId() {
         generatedCityId++;
         return generatedCityId;
     }
@@ -30,11 +30,12 @@ public class CityDataEntity {
     public String getCityName() {
         return cityName;
     }
+
     public WeatherDataEntity getWeatherDataEntity() {
         return weatherDataEntity;
     }
 
     public void showWeatherDataEntity() {
-         System.out.println("City Id: "+ cityId + ". " + cityName + weatherDataEntity.toString());
+        System.out.println("Id: " + cityId + ". " + cityName + weatherDataEntity.toString());
     }
 }

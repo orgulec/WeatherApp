@@ -3,6 +3,7 @@ import services.FindCityByName;
 import java.util.Scanner;
 
 import static services.AutomaticDataBaseGenerator.*;
+import static services.FindCityByName.findAndRemoveCityFromDb;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,12 +22,30 @@ public class Main {
                     System.out.println("Good Bye!");
                     isRunning = false;
                 }
-                case "2" -> {
-                    DATA_BASE.printAllDataEntities();
-                    isFirstRun = true;
-               }
                 case "1" -> {
-                    new FindCityByName().serchForCity();
+                    new FindCityByName().searchForCity();
+                    isFirstRun = true;
+                }
+                case "2" -> {
+                    if(DATA_BASE.count()>0) DATA_BASE.printAllDataEntities();
+                    else System.out.println("Database is empty!");
+                    isFirstRun = true;
+                }
+                case "3" -> {
+                    DATA_BASE.clear();
+                    generateBasicDataBaseAtStart();
+                    isFirstRun = true;
+                }
+                case "4" -> {
+                    findAndRemoveCityFromDb();
+                    isFirstRun = true;
+                }
+                case "5" -> {
+                    if(DATA_BASE.count()>0) {
+                        DATA_BASE.clear();
+                        System.out.println("Database is now empty!");
+                    }
+                    else System.out.println("Database is already empty!");
                     isFirstRun = true;
                 }
                 default -> {
@@ -39,13 +58,17 @@ public class Main {
 
     private static boolean showWelcomeMenu(boolean isFirstRun) {
         if (isFirstRun) {
-            System.out.println("\n"+"""
+            System.out.println("""
                     ----------------------
                     WELCOME in Avarage Weather App!
                     Press:
-                    1. to input a new city name into database
-                    2. to print city database
-                    X to quit
+                      1. to input a new city name into database
+                      2. to print city database
+                      3. to reload basic database
+                      4. to remove city from database
+                      5. to clean database
+                      
+                      X to quit
                     ----------------------
                     """);
             isFirstRun = false;

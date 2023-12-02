@@ -1,7 +1,5 @@
 package api.weatherstack;
 
-import java.time.LocalDateTime;
-
 class CityWsResponse {
     private final Current current;
     private final Location location;
@@ -14,7 +12,6 @@ class CityWsResponse {
     public Current getCurrent() {
         return current;
     }
-
 
     public Location getLocation() {
         return location;

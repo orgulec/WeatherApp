@@ -1,6 +1,6 @@
 package api.open_weather;
 
- class Main {
+class Main {
     final Float temp;
     final Float pressure;
 
